@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<head>
+    <title>Simple CRUD</title>
+</head>
+
+<style>
+    .body{
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+    }
+    .Center {
+            margin: auto;
+            width: 60%;
+            border: 2px solid #3498db;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin-top: 50px;
+    }
+    h3 {
+            color: #3498db;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .btn-cancel {
+            background-color: #e74c3c;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+
+        .panel-group {
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+    
+</style>
+
+<body>
+    <div class="Center">
+        <h3>List of People</h3>
+        <h:form rendered="#{not empty simpleCrudBean.item}">
+            <h:dataTable value="#{simpleCrudBean.list}" var="item">
+<!--                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{item.id}
+                </h:column>-->
+                <h:column>
+                    <f:facet name="header">NAME</f:facet>
+                    #{item.name}
+                </h:column>
+                <h:column>
+                     <f:facet name="header">EDIT</f:facet>
+                    <h:commandButton styleClass="btn" value="edit" action="#{simpleCrudBean.edit(item)}" />
+                </h:column>
+                <h:column>
+                     <f:facet name="header">DELETE</f:facet>
+                    <h:commandButton styleClass="btn btn-cancel" value="delete" action="#{simpleCrudBean.delete(item)}" />
+                </h:column>
+            </h:dataTable>
+        </h:form>
+
+        <h:panelGroup rendered="#{empty simpleCrudBean.list}">
+            <p>No People! Please add people in DB.</p>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{!simpleCrudBean.edit}">
+            <h3>Add People</h3>
+            <h:form>
+                <p>Name: <h:inputText value="#{simpleCrudBean.item.name}" /></p>
+                <p>
+                    <h:commandButton styleClass="btn" value="add" action="#{simpleCrudBean.add}" />
+                    <h:commandButton styleClass="btn btn-cancel" value="reset" action="#{simpleCrudBean.resetAdd}" />
+                </p>
+            </h:form>
+        </h:panelGroup>
+
+        <h:panelGroup rendered="#{simpleCrudBean.edit}">
+            <h3>Edit People #{simpleCrudBean.item.id}</h3>
+            <h:form>
+                <p>Name: <h:inputText value="#{simpleCrudBean.item.name}" /></p>
+                <p>
+                    <h:commandButton styleClass="btn" value="save"   action="#{simpleCrudBean.saveEdit()}" />
+                    <h:commandButton styleClass="btn btn-cancel" value="cancel" action="#{simpleCrudBean.cancelEdit()}" />
+                </p>
+            </h:form>
+        </h:panelGroup>
+
+        <p>
+            <a href="#{appUrlStore.baseUrl}">Go back to index</a>
+        </p>
+        <p>Debug - Item: #{simpleCrudBean.item}</p>
+    </div>
+</body>
+</html>

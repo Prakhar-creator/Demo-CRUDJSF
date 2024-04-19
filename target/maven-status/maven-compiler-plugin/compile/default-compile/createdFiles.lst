@@ -1,0 +1,6 @@
+com\demo1\bean\HelloWorld.class
+com\demo1\resources\JakartaEE8Resource.class
+com\demo1\bean\Database_connection.class
+com\demo1\JakartaRestConfiguration.class
+com\demo1\bean\Student.class
+com\demo1\bean\SimpleCrudBean.class
